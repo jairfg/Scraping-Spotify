@@ -1,0 +1,11 @@
+,0
+external_urls,{'spotify': 'https://open.spotify.com/artist/2DaxqgrOhkeH0fpeiQq2f4'}
+followers,"{'href': None, 'total': 5778560}"
+genres,"['beatlesque', 'britpop', 'madchester', 'permanent wave', 'rock']"
+href,https://api.spotify.com/v1/artists/2DaxqgrOhkeH0fpeiQq2f4
+id,2DaxqgrOhkeH0fpeiQq2f4
+images,"[{'height': 640, 'url': 'https://i.scdn.co/image/2fe839dab1281dd51daf908a4f1a3080008a9f9f', 'width': 640}, {'height': 320, 'url': 'https://i.scdn.co/image/830db3583b2f2f73017999432d0b7c359cfe6791', 'width': 320}, {'height': 160, 'url': 'https://i.scdn.co/image/83066721dfaf0b0f9d155992ba8049ef4f04729b', 'width': 160}]"
+name,Oasis
+popularity,79
+type,artist
+uri,spotify:artist:2DaxqgrOhkeH0fpeiQq2f4
