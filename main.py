@@ -3,14 +3,12 @@ import base64
 import pandas as pd
 import math
 
-def main(client_id,client_secret , str_artist):
+def spotify(client_id,client_secret , str_artist):
     token = get_token(client_id,client_secret)
     header = {'Authorization': f'Bearer {token}'};
     artist_id = get_artist(str_artist,header)
     list_discography = get_discography(artist_id,header);
     get_tracks(list_discography, header,artist_id)
-
-
 
 
 def get_artist(str_artist,header):
@@ -23,7 +21,6 @@ def get_artist(str_artist,header):
     resultado = busqueda.json()
     artists = resultado['artists']['items']
     artists_data = pd.DataFrame(artists)
-    # artista
     artist = artists_data.sort_values(by="popularity", ascending=False).iloc[0]
 
     artist.to_csv('artist.csv')
@@ -47,22 +44,27 @@ def get_discography(artist_id ,header,offset = 0,limit = 30):
         for album in albums:
             list_discography.append(album)
         offset = offset + limit
-    discography = pd.DataFrame(list_discography)
-    discography.to_csv('discography.csv')
+
     return list_discography;
 
 def get_tracks(list_discography , header, artist_id):
     list_tracks = []
     for discography in list_discography:
         discography_id = discography['id']
+        discography['track_artist'] = 0
         url_tracks = f'https://api.spotify.com/v1/albums/{discography_id}/tracks'
         params = {'market': 'PE', 'offset': 0, 'limit': 50};
         tracks = requests.get(url_tracks, headers=header, params=params)
         tracks = tracks.json()['items']
         for track in tracks:
-            print(track['artists'])
-            track['discography_id']= discography_id
-            list_tracks.append(track)
+            print(track)
+            if track['artists'][0]['id'] == artist_id:
+                discography['track_artist'] = discography['track_artist'] +1
+                track['discography_id']= discography_id
+                list_tracks.append(track)
+
+    discography = pd.DataFrame(list_discography)
+    discography.to_csv('discography.csv')
     tracks_data = pd.DataFrame(list_tracks)
     tracks_data.to_csv('tracks.csv')
 
@@ -86,10 +88,10 @@ def get_token(client_id,client_secret):
     return token
 
 if __name__ == "__main__":
-    client_id = '95993c01b1534551a23d9e8342f712ba'
-    client_secret = '54a661f551684dd4833b20fa0bdc3fe3'
+    client_id = '##'
+    client_secret = '##'
     artist = input("Artista: ")
-    main(client_id, client_secret, artist);
+    spotify(client_id, client_secret, artist);
 
 
 
